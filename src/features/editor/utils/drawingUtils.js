@@ -7,7 +7,7 @@
  * added to the graph.
  */
 
-import * as joint from 'jointjs';
+import joint from 'jointjs';
 import { v4 as uuidv4 } from 'uuid';
 
 // Custom element: defined locally to avoid mutating the frozen joint.shapes namespace.

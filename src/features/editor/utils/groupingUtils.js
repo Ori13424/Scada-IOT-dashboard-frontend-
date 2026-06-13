@@ -13,7 +13,7 @@
  *   const released = ungroupCells(graph, groupId);
  */
 
-import * as joint from 'jointjs';
+import joint from 'jointjs';
 import { v4 as uuidv4 } from 'uuid';
 
 const GROUP_PADDING = 24;

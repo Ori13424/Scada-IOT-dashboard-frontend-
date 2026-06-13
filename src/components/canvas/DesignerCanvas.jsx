@@ -205,7 +205,7 @@ export const DesignerCanvas = () => {
   const onDrop = (e) => {
     e.preventDefault();
     if (isSimulating || !canvasRef.current) return;
-    const rawData = e.dataTransfer.getData('text/x-scada-node');
+    const rawData = e.dataTransfer.getData('application/scada');
     if (!rawData) return;
     const data = JSON.parse(rawData);
     if (!data.t) return;
@@ -446,7 +446,7 @@ export const DesignerCanvas = () => {
                         const DevIcon = ICON_MAP[dev.iconKey] || Activity;
                         return (
                           <div key={dev.id} className="mx-3 mb-2 rounded-xl overflow-hidden" style={{ border: '1px solid var(--border)' }}>
-                            <div draggable onDragStart={e => e.dataTransfer.setData('text/x-scada-node', JSON.stringify({ t: 'tagNode', props: { name: dev.name } }))} className="flex items-center gap-3 p-3 cursor-grab" style={{ backgroundColor: 'var(--bg-subtle)' }}>
+                            <div draggable onDragStart={e => e.dataTransfer.setData('application/scada', JSON.stringify({ t: 'tagNode', props: { name: dev.name } }))} className="flex items-center gap-3 p-3 cursor-grab" style={{ backgroundColor: 'var(--bg-subtle)' }}>
                               <div className="shrink-0"><DevIcon size={24} color="var(--accent)" /></div>
                               <div className="flex-1 min-w-0">
                                 <div className="text-xs font-bold truncate" style={{ color: 'var(--text-primary)' }}>{dev.name}</div>
@@ -456,7 +456,7 @@ export const DesignerCanvas = () => {
                             </div>
 
                             {dev.props && dev.props.map((prop, pi) => (
-                              <div key={pi} draggable onDragStart={e => e.dataTransfer.setData('text/x-scada-node', JSON.stringify({ t: 'tagNode', props: { tagKey: prop.key, name: prop.name } }))} className="flex items-center justify-between px-4 py-2 cursor-grab border-t" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-panel)' }}>
+                              <div key={pi} draggable onDragStart={e => e.dataTransfer.setData('application/scada', JSON.stringify({ t: 'tagNode', props: { tagKey: prop.key, name: prop.name } }))} className="flex items-center justify-between px-4 py-2 cursor-grab border-t" style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg-panel)' }}>
                                 <span className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>{prop.name}</span>
                                 <TagBadge type={prop.type} />
                               </div>
@@ -486,7 +486,7 @@ export const DesignerCanvas = () => {
                       {group.items.map(tool => {
                         const CustomIcon = tool.i;
                         return (
-                          <div key={tool.t} draggable onDragStart={e => e.dataTransfer.setData('text/x-scada-node', JSON.stringify({ t: tool.t, props: tool.props }))} 
+                          <div key={tool.t} draggable onDragStart={e => e.dataTransfer.setData('application/scada', JSON.stringify({ t: tool.t, props: tool.props }))} 
                             className="flex flex-col items-center gap-2 p-3 rounded-xl border cursor-grab text-center transition-all hover:opacity-80" 
                             style={{ backgroundColor: 'var(--bg-subtle)', borderColor: 'var(--border)' }}>
                             <CustomIcon size={32} color={tool.props.color || 'var(--text-secondary)'} />

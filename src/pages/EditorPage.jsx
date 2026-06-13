@@ -15,7 +15,7 @@
  */
 
 import React, { useState, useRef, useContext, useEffect, useMemo, useCallback } from 'react';
-import * as joint from 'jointjs';
+import joint from 'jointjs';
 import { v4 as uuidv4 } from 'uuid';
 import { ZoomIn, ZoomOut, Maximize2, Square } from 'lucide-react';
 
