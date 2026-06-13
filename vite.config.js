@@ -7,4 +7,13 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  optimizeDeps: {
+    include: ['jointjs'],
+  },
+  build: {
+    commonjsOptions: {
+      include: [/jointjs/, /node_modules/],
+      transformMixedEsModules: true,
+    },
+  },
 })
