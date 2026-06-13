@@ -10,36 +10,34 @@
 import * as joint from 'jointjs';
 import { v4 as uuidv4 } from 'uuid';
 
-// Custom element: no refWidth/refHeight defaults that distort the d path
-const NS = 'scada';
-joint.shapes[NS] = joint.shapes[NS] || {};
-if (!joint.shapes[NS].DrawnPath) {
-  joint.shapes[NS].DrawnPath = joint.dia.Element.define('scada.DrawnPath', {
-    attrs: {
-      body: {
-        fill: 'none',
-        stroke: '#CBD5E1',
-        strokeWidth: 2,
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round',
-      },
-      label: {
-        textVerticalAnchor: 'middle',
-        textAnchor: 'middle',
-        refX: '50%',
-        refY: '50%',
-        fontSize: 13,
-        fill: '#CBD5E1',
-        fontFamily: 'Inter, sans-serif',
-      },
+// Custom element: defined locally to avoid mutating the frozen joint.shapes namespace.
+// joint.shapes is non-extensible in some JointJS builds; keep the class in a
+// module-level variable and reference it directly instead of via joint.shapes.scada.
+const DrawnPath = joint.dia.Element.define('scada.DrawnPath', {
+  attrs: {
+    body: {
+      fill: 'none',
+      stroke: '#CBD5E1',
+      strokeWidth: 2,
+      strokeLinecap: 'round',
+      strokeLinejoin: 'round',
     },
-  }, {
-    markup: [
-      { tagName: 'path', selector: 'body' },
-      { tagName: 'text', selector: 'label' },
-    ],
-  });
-}
+    label: {
+      textVerticalAnchor: 'middle',
+      textAnchor: 'middle',
+      refX: '50%',
+      refY: '50%',
+      fontSize: 13,
+      fill: '#CBD5E1',
+      fontFamily: 'Inter, sans-serif',
+    },
+  },
+}, {
+  markup: [
+    { tagName: 'path', selector: 'body' },
+    { tagName: 'text', selector: 'label' },
+  ],
+});
 
 // ── Port config shared by all drawable shapes ─────────────────────────────────
 const makePortMarkup = () => [
@@ -166,7 +164,7 @@ export const createPolygon = ({ vertices, isDarkMode }) => {
   const relVerts = vertices.map(v => ({ x: v.x - minX, y: v.y - minY }));
   const d = buildPolyPath(relVerts, true);
 
-  return new joint.shapes[NS].DrawnPath({
+  return new DrawnPath({
     id: uuidv4(),
     position: { x: minX, y: minY },
     size: { width: w, height: h },
@@ -336,7 +334,7 @@ export const createFreedrawPath = ({ points, isDarkMode }) => {
   const d = reduced
     .map((p, i) => `${i === 0 ? 'M' : 'L'} ${(p.x - minX).toFixed(1)} ${(p.y - minY).toFixed(1)}`)
     .join(' ');
-  return new joint.shapes[NS].DrawnPath({
+  return new DrawnPath({
     id: uuidv4(),
     position: { x: minX, y: minY },
     size: { width: w, height: h },
